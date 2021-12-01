@@ -1,0 +1,16 @@
+service: cadastro-pacientes
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+
+functions:
+  listarPacientes:
+    handler: handler.listarPacientes
+    events:
+      - http:
+          path: pacientes
+          method: get
