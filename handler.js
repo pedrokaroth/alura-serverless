@@ -20,20 +20,19 @@ module.exports.listarPacientes = async (event) => {
 };
 
 module.exports.obterPaciente = async (event) => {
-const { id } = event.pathParameters;
 
-const paciente = pacientes.find((paciente) => paciente.id == id);
+  const { id } = event.pathParameters;
+  const paciente = pacientes.find((paciente) => paciente.id == id);
 
-if (!paciente) {
-  return {
-    statusCode: 400,
-    body: JSON.stringify({error: "Paciente não encontrado"})
+  if (!paciente) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({error: "Paciente não encontrado"})
+    }
   }
-}
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(paciente, null, 2),
-  };
-
+    return {
+      statusCode: 200,
+      body: JSON.stringify(paciente, null, 2),
+    };
 };
