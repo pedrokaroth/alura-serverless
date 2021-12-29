@@ -1,0 +1,28 @@
+{
+    "PACIENTES": [
+        {
+            "PutRequest": {
+                "Item": {
+                    "dt_nascimento": {
+                        "S": "1999-05-06"
+                    },
+                    "email": {
+                        "S": "pedrokaroth@gmail.com"
+                    },
+                    "nome": {
+                        "S": "Pedro Afonso Roth Dimbarre"
+                    },
+                    "paciente_id": {
+                        "S": "pedro-1"
+                    },
+                    "status": {
+                        "BOOL": true
+                    },
+                    "telefone": {
+                        "S": "(47) 9 9999-9999"
+                    }
+                }
+            }
+        }
+    ]
+}
