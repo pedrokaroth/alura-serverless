@@ -34,10 +34,8 @@ module.exports.listarPacientes = async (event) => {
 };
 
 module.exports.obterPaciente = async (event) => {
-  console.log(event.pathParameters);
   try {
     const pacienteId = event.pathParameters;
-    console.log(pacienteId);
 
     const data = await dynameDb.get({
       ...params,
