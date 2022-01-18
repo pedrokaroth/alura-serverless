@@ -17,7 +17,8 @@
             "dynamodb:Query",
             "dynamodb:Scan",
             "dynamodb:PutItem",
-            "dynamodb:DeleteItem"
+            "dynamodb:DeleteItem",
+            "dynamodb:GetItem"
           ],
           "Resource": "arn:aws:dynamodb:us-east-1:961311579452:table/PACIENTES"
         }
@@ -195,7 +196,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/cadastro-pacientes/dev/1640812158422-2021-12-29T21:09:18.422Z/cadastro-pacientes.zip"
+                "S3Key": "serverless/cadastro-pacientes/dev/1642548014917-2022-01-18T23:20:14.917Z/cadastro-pacientes.zip"
               },
               "Handler": "handler.listarPacientes",
               "Runtime": "nodejs12.x",
@@ -220,7 +221,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/cadastro-pacientes/dev/1640812158422-2021-12-29T21:09:18.422Z/cadastro-pacientes.zip"
+                "S3Key": "serverless/cadastro-pacientes/dev/1642548014917-2022-01-18T23:20:14.917Z/cadastro-pacientes.zip"
               },
               "Handler": "handler.obterPaciente",
               "Runtime": "nodejs12.x",
@@ -238,24 +239,24 @@
               "ObterPacienteLogGroup"
             ]
           },
-          "ListarPacientesLambdaVersionvxCmnONTrvm16nQNpBMsh6KzrJ84rAJDJg5tunL9Y": {
+          "ListarPacientesLambdaVersionyWt5AiC49O3KF8Nd0LrTCjzxBqm0S9xcvOizt5rbo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ListarPacientesLambdaFunction"
               },
-              "CodeSha256": "CQpCD0O5Oqve/GiP2h8EqOICOyOaKw1MH7UhYqi+NNc="
+              "CodeSha256": "RXinuXWDBei38V4zPoF/SLsd7KaKuZeMmuCx679xVqc="
             }
           },
-          "ObterPacienteLambdaVersionXZjD4OsyAtryJp40kaTx9WRAqoj3jds9rtl5ikwUM": {
+          "ObterPacienteLambdaVersioncTYDVcSOiViW1ZAe9jscjifrYS2C18csV4L35DDGbxk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ObterPacienteLambdaFunction"
               },
-              "CodeSha256": "CQpCD0O5Oqve/GiP2h8EqOICOyOaKw1MH7UhYqi+NNc="
+              "CodeSha256": "RXinuXWDBei38V4zPoF/SLsd7KaKuZeMmuCx679xVqc="
             }
           },
           "ApiGatewayRestApi": {
@@ -389,7 +390,7 @@
               "ObterPacienteLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1640812143603": {
+          "ApiGatewayDeployment1642548000419": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -511,7 +512,7 @@
           "ListarPacientesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ListarPacientesLambdaVersionvxCmnONTrvm16nQNpBMsh6KzrJ84rAJDJg5tunL9Y"
+              "Ref": "ListarPacientesLambdaVersionyWt5AiC49O3KF8Nd0LrTCjzxBqm0S9xcvOizt5rbo"
             },
             "Export": {
               "Name": "sls-cadastro-pacientes-dev-ListarPacientesLambdaFunctionQualifiedArn"
@@ -520,7 +521,7 @@
           "ObterPacienteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ObterPacienteLambdaVersionXZjD4OsyAtryJp40kaTx9WRAqoj3jds9rtl5ikwUM"
+              "Ref": "ObterPacienteLambdaVersioncTYDVcSOiViW1ZAe9jscjifrYS2C18csV4L35DDGbxk"
             },
             "Export": {
               "Name": "sls-cadastro-pacientes-dev-ObterPacienteLambdaFunctionQualifiedArn"
@@ -660,7 +661,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "ListarPacientesLambdaVersionvxCmnONTrvm16nQNpBMsh6KzrJ84rAJDJg5tunL9Y"
+        "versionLogicalId": "ListarPacientesLambdaVersionyWt5AiC49O3KF8Nd0LrTCjzxBqm0S9xcvOizt5rbo"
       },
       "obterPaciente": {
         "handler": "handler.obterPaciente",
@@ -679,7 +680,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "ObterPacienteLambdaVersionXZjD4OsyAtryJp40kaTx9WRAqoj3jds9rtl5ikwUM"
+        "versionLogicalId": "ObterPacienteLambdaVersioncTYDVcSOiViW1ZAe9jscjifrYS2C18csV4L35DDGbxk"
       }
     },
     "resources": {
@@ -734,7 +735,7 @@
     "artifact": "C:\\Users\\pedro\\Desktop\\serverless\\cadastro-pacientes\\.serverless\\cadastro-pacientes.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/cadastro-pacientes/dev/1640812158422-2021-12-29T21:09:18.422Z",
+    "artifactDirectoryName": "serverless/cadastro-pacientes/dev/1642548014917-2022-01-18T23:20:14.917Z",
     "artifact": "cadastro-pacientes.zip"
   }
 }
