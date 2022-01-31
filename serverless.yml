@@ -50,7 +50,14 @@ functions:
     events:
       - http:
           path: pacientes/{id}
-          method: put      
+          method: put
+
+  excluirPaciente:
+    handler: handler.excluirPaciente
+    events:
+      - http:
+          path: pacientes/{id}
+          method: delete        
 
 resources:
   Resources:

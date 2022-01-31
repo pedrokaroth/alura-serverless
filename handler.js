@@ -8,7 +8,7 @@ const params = {
   TableName: 'PACIENTES'
 }
 
-module.exports.listarPacientes = async (event) => {
+module.exports.listarPacientes = async () => {
   try {
     let data = await dynameDb.scan(params).promise();
 
@@ -72,7 +72,7 @@ module.exports.cadastrarPaciente = async (event) => {
     let timestamp = new Date().getTime();
   
     const {
-      paciente_id, nome, dt_nascimento, email, telefone
+      nome, dt_nascimento, email, telefone
     } = dados;
   
     const paciente = {
@@ -138,6 +138,44 @@ module.exports.atualizarPaciente = async (event) => {
       statusCode: 204
     }
     
+  } catch (err) {
+    console.log("Error: ", err);
+    
+    let error = err.name ? err.name : "Exception";
+    let message = err.message ? err.message : "Unknown error";
+    let statusCode = err.statusCode ? err.statusCode : 500;
+
+    if (error == 'ConditionalCheckFailedException') {
+      error = 'Paciente não existe';
+      message = `Recurso com o ID ${id} não existe e não pode ser atualizado`,
+      statusCode = 404
+    }
+
+    return {
+      statusCode,
+      body: JSON.stringify({
+        error,
+        message
+      })
+    }
+  }
+}
+
+module.exports.excluirPaciente = async (event) => {
+  const { id } = event.pathParameters;
+
+  try {
+    await dynameDb.delete({
+      ...params,
+      Key: {
+        paciente_id: id
+      },
+      ConditionExpression: 'attribute_exists(paciente_id)'
+    }).promise();
+
+    return {
+      statusCode: 204
+    }
   } catch (err) {
     console.log("Error: ", err);
     
