@@ -1,12 +1,7 @@
 'use strict';
 
-const pacientes = [
-  {id: 1, nome: "Pedro", dataNascimento: '1995-08-16'},
-  {id: 2, nome: "Juca", dataNascimento: '1999-06-05'},
-  {id: 3, nome: "Nelso", dataNascimento: '2008-07-28'}
-]
-
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
 
 const dynameDb = new AWS.DynamoDB.DocumentClient();
 const params = {
@@ -36,6 +31,7 @@ module.exports.listarPacientes = async (event) => {
 module.exports.obterPaciente = async (event) => {
   try {
     const pacienteId = event.pathParameters;
+    
 
     const data = await dynameDb.get({
       ...params,
@@ -68,4 +64,45 @@ module.exports.obterPaciente = async (event) => {
       })
     }
   }
+};
+
+module.exports.cadastrarPaciente = async (event) => {
+  try {
+    let dados = JSON.parse(event.body);
+    let timestamp = new Date().getTime();
+  
+    const {
+      paciente_id, nome, data_nascimento, email, telefone
+    } = dados;
+  
+    const paciente = {
+      paciente_id: uuidv4(),
+      nome,
+      data_nascimento,
+      email,
+      telefone,
+      status: true,
+      criado: timestamp,
+      atualizado: timestamp
+    }
+  
+    await dynameDb.put({
+      TableName: "PACIENTES",
+      Item: paciente
+    }).promise();
+  
+    return {
+      statusCode: 201
+    }
+  } catch (err) {
+    console.log("Error: ", err);
+    return {
+      statusCode: err.statusCode ? err.statusCode : 500,
+      body: JSON.stringify({
+        error: err.name ? err.name : "Exception",
+        message: err.message ? err.message : "Unknown error"
+      })
+    }
+  }
+
 };
