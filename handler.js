@@ -30,13 +30,13 @@ module.exports.listarPacientes = async (event) => {
 
 module.exports.obterPaciente = async (event) => {
   try {
-    const pacienteId = event.pathParameters;
+    const { id } = event.pathParameters;
     
 
     const data = await dynameDb.get({
       ...params,
       Key: {
-        "paciente_id": pacienteId.id
+        "paciente_id": id
       },
     }).promise();
 
@@ -72,13 +72,13 @@ module.exports.cadastrarPaciente = async (event) => {
     let timestamp = new Date().getTime();
   
     const {
-      paciente_id, nome, data_nascimento, email, telefone
+      paciente_id, nome, dt_nascimento, email, telefone
     } = dados;
   
     const paciente = {
       paciente_id: uuidv4(),
       nome,
-      data_nascimento,
+      dt_nascimento,
       email,
       telefone,
       status: true,
@@ -106,3 +106,57 @@ module.exports.cadastrarPaciente = async (event) => {
   }
 
 };
+
+module.exports.atualizarPaciente = async (event) => {
+  const { id } = event.pathParameters;
+
+  try {
+    const timestamp = new Date().getTime();
+
+    let dados = JSON.parse(event.body);
+
+    const {nome, dt_nascimento, email, telefone } = dados;
+
+    await dynameDb.update({
+      ...params,
+      Key: {
+        paciente_id: id,
+      },
+      UpdateExpression:
+        'SET nome = :nome, dt_nascimento = :dt_nascimento, email = :email, telefone = :telefone, atualizado = :atualizado',
+      ConditionExpression: 'attribute_exists(paciente_id)',
+      ExpressionAttributeValues: {
+        ':nome': nome,
+        ':dt_nascimento': dt_nascimento,
+        ':email': email,
+        ':telefone': telefone,
+        ':atualizado': timestamp
+      }  
+    }).promise();
+
+    return {
+      statusCode: 204
+    }
+    
+  } catch (err) {
+    console.log("Error: ", err);
+    
+    let error = err.name ? err.name : "Exception";
+    let message = err.message ? err.message : "Unknown error";
+    let statusCode = err.statusCode ? err.statusCode : 500;
+
+    if (error == 'ConditionalCheckFailedException') {
+      error = 'Paciente não existe';
+      message = `Recurso com o ID ${id} não existe e não pode ser atualizado`,
+      statusCode = 404
+    }
+
+    return {
+      statusCode,
+      body: JSON.stringify({
+        error,
+        message
+      })
+    }
+  }
+}
